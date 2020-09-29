@@ -7,8 +7,7 @@ from .serializers import CustomerSerializer
 from .models import Customer
 
 
-@api_view(['POST']) #http method the client =POST
-#@authentication_classes([SessionAuthentication])
+@api_view(['POST']) 
 @permission_classes([IsAuthenticated]) 
 def customer_create_view(request,*args,**kwargs):
     request.data['user']=request.user.id

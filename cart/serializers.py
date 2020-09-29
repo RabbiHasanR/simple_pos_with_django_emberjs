@@ -37,11 +37,11 @@ class CartSerializer(serializers.ModelSerializer):
 
     user = UserSerializer(read_only=True)
     # used to represent the target of the relationship using its __unicode__ method
-    # items = serializers.StringRelatedField(many=True)
+    items = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Cart
-        fields = ['id', 'user', 'created_at', 'updated_at']
+        fields = ['id', 'user', 'created_at', 'updated_at','items']
             
 
 class CartItemSerializer(serializers.ModelSerializer):

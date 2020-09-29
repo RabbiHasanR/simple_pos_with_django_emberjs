@@ -4,11 +4,7 @@ from customer.models import Customer
 from product.models import Product
 
 class Order(models.Model):
-    """
-    An Order is the more permanent counterpart of the shopping cart. It represents
-    the frozen the state of the cart on the moment of a purchase. In other words,
-    an order is a customer purchase.
-    """
+
     customer = models.ForeignKey(
         Customer,
         related_name='customer',

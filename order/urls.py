@@ -8,7 +8,6 @@ router.register(r'orders', OrderViewSet)
 router.register(r'order_items', OrderItemViewSet)
 
 # Wire up the API using automatic URL routing
-# Also include login URLs for the browsable API
 urlpatterns = [
     path('', include(router.urls)),
 ]

@@ -73,16 +73,6 @@ class CartViewSet(viewsets.ModelViewSet):
 
     @action(detail=True,methods=['POST', 'PUT'])
     def add_to_cart(self, request, pk=None):
-        """Add an item to a user's cart.
-        Adding to cart is disallowed if there is not enough inventory for the
-        product available. If there is, the quantity is increased on an existing
-        cart item or a new cart item is created with that quantity and added
-        to the cart.
-        Parameters
-        ----------
-        request: request
-        Return the updated cart.
-        """
         cart = self.get_object()
         try:
             product = Product.objects.get(
@@ -114,17 +104,6 @@ class CartViewSet(viewsets.ModelViewSet):
 
     @action(detail=True,methods=['POST', 'PUT'])
     def remove_from_cart(self, request, pk=None):
-        """Remove an item from a user's cart.
-        Like on the Everlane website, customers can only remove items from the
-        cart 1 at a time, so the quantity of the product to remove from the cart
-        will always be 1. If the quantity of the product to remove from the cart
-        is 1, delete the cart item. If the quantity is more than 1, decrease
-        the quantity of the cart item, but leave it in the cart.
-        Parameters
-        ----------
-        request: request
-        Return the updated cart.
-        """
         cart = self.get_object()
         try:
             product = Product.objects.get(

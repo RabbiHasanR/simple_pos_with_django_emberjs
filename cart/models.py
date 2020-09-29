@@ -69,5 +69,5 @@ class CartItem(models.Model):
     )
     quantity = models.PositiveIntegerField(default=1, null=True, blank=True)
 
-    # def __unicode__(self):
-    #     return '%s: %s' % (self.product.title, self.quantity)
+    def __unicode__(self):
+        return '%s: %s' % (self.product.title, self.quantity)
