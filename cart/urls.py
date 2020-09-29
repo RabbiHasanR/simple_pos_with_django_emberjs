@@ -1,15 +1,20 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path,include
+from rest_framework import routers
 
-from .views import (add_cart_item,remove_cart_item,get_cart_items)
+from .views import (CartViewSet,CartItemViewSet)
 
 '''
 CLIENT
 base endpoint /api/tweets/
 '''
+router = routers.DefaultRouter()
+router.register(r'carts', CartViewSet)
+router.register(r'cart_items',CartItemViewSet)
 
 urlpatterns = [
-    path('',get_cart_items),
-    path('<int:product_id>/add_to_cart/',add_cart_item),
-    path('<int:product_id>/remove_to_cart/',remove_cart_item),
+    # path('',get_cart_items),
+    # path('add_to_cart/<int:product_id>/',cart_item_add_view),
+    # path('<int:product_id>/remove_to_cart/',cart_item_remove_view),
+    path('',include(router.urls))
 ]
