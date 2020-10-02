@@ -25,7 +25,7 @@ SECRET_KEY = 'sd3v)e)z10#@t@9j%#mktq!a&d(3ur%jc%_$d^j@b3idsk4h#i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
 
 # Application definition
@@ -37,18 +37,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
     'rest_framework',
     'product',
     'cart',
     'customer',
-    'order'
-
+    'order',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -56,6 +57,30 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'pos_api.urls'
+CORS_ALLOW_ALL_ORIGINS = True
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:4200",
+# ]
+# CORS_ALLOW_METHODS = [
+#     'DELETE',
+#     'GET',
+#     'OPTIONS',
+#     'PATCH',
+#     'POST',
+#     'PUT',
+# ]
+# CORS_ALLOW_HEADERS = [
+#     'Access-Control-Allow-Origin',
+#     'accept',
+#     'accept-encoding',
+#     'authorization',
+#     'content-type',
+#     'dnt',
+#     'origin',
+#     'user-agent',
+#     'x-csrftoken',
+#     'x-requested-with',
+# ]
 
 TEMPLATES = [
     {
@@ -129,24 +154,78 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-DEFAULT_RENDERER_CLASSES=[
-    'rest_framework.renderers.JSONRenderer',
-]
+# DEFAULT_RENDERER_CLASSES=[
+#     'rest_framework.renderers.JSONRenderer',
+# ]
 
-DEFAULT_AUTHENTICATION_CLASSES=[
-    'rest_framework.authentication.SessionAuthentication',
-]
+# DEFAULT_AUTHENTICATION_CLASSES=[
+#     'rest_framework.authentication.SessionAuthentication',
+# ]
 
-if DEBUG:
-    DEFAULT_RENDERER_CLASSES+=[
-    'rest_framework.renderers.BrowsableAPIRenderer',
-    ]
+# if DEBUG:
+#     DEFAULT_RENDERER_CLASSES+=[
+#     'rest_framework.renderers.BrowsableAPIRenderer',
+#     ]
     # DEFAULT_AUTHENTICATION_CLASSES+=[
     #     'tweeter.rest_api.dev.DevAuthentication',
     # ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES':DEFAULT_AUTHENTICATION_CLASSES,
-'DEFAULT_RENDERER_CLASSES':DEFAULT_RENDERER_CLASSES,
+# REST_FRAMEWORK = {
+#   'DEFAULT_PERMISSION_CLASSES': [      
+#    'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+#   ],
+# }
+#   'DEFAULT_RENDERER_CLASSES':[
+#     'rest_framework.renderers.BrowsableAPIRenderer',
+#     ],
 
+
+# REST_FRAMEWORK = {
+#   'PAGE_SIZE': 100,
+  
+#   'EXCEPTION_HANDLER': 
+#     'rest_framework_json_api.exceptions.exception_handler',
+  
+#   'DEFAULT_PAGINATION_CLASS':    'rest_framework_json_api.pagination.JsonApiPageNumberPagination',
+#   'DEFAULT_PARSER_CLASSES': (
+#     'rest_framework_json_api.parsers.JSONParser',
+#     'rest_framework.parsers.FormParser',
+#     'rest_framework.parsers.MultiPartParser'
+#   ),
+#   'DEFAULT_RENDERER_CLASSES': (
+#     'rest_framework_json_api.renderers.JSONRenderer',
+#     'rest_framework.renderers.BrowsableAPIRenderer',
+#    ),
+#    'DEFAULT_METADATA_CLASS': 'rest_framework_json_api.metadata.JSONAPIMetadata',
+#    'DEFAULT_FILTER_BACKENDS': (
+#      'rest_framework.filters.OrderingFilter',
+#     ),
+#    'ORDERING_PARAM': 'sort',
+   
+#    'TEST_REQUEST_RENDERER_CLASSES': (
+#      'rest_framework_json_api.renderers.JSONRenderer',
+#     ),
+   
+#    'TEST_REQUEST_DEFAULT_FORMAT': 'vnd.api+json'
+# }
+
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+    ),
+    "PAGE_SIZE": 10,
+    "EXCEPTION_HANDLER": "rest_framework_json_api.exceptions.exception_handler",
+    "DEFAULT_PAGINATION_CLASS":
+        "rest_framework_json_api.pagination.PageNumberPagination",
+    "DEFAULT_PARSER_CLASSES": (
+        "rest_framework_json_api.parsers.JSONParser",
+        "rest_framework.parsers.FormParser",
+        "rest_framework.parsers.MultiPartParser"
+    ),
+    "DEFAULT_RENDERER_CLASSES": (
+        "rest_framework_json_api.renderers.JSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ),
+    "DEFAULT_METADATA_CLASS": "rest_framework_json_api.metadata.JSONAPIMetadata",
 }
